@@ -19,7 +19,7 @@ const Hero = () => {
 
             </div>
             <div className='flex items-center h-full'>
-                <img src="/veg_basket.png"  alt="e-image" />
+                <img   src="/remove.png"  alt="e-image" />
             </div>
         </div>
        

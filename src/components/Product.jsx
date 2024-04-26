@@ -9,10 +9,10 @@ const Product = ({item, handleClick}) => {
     
 
   return (
-    <div className='border border-gray-300 p-4 cursor-pointer relative  group hover:shadow-2xl'>
-        <img className='mx-auto' src={imgSrc} alt={title} />
+    <div className='border border-gray-300 p-4 cursor-pointer relative  group hover:shadow-2xl '>
+        <img className='mx-auto w-screen ' src={imgSrc}  alt={title} />
         <div className='pt-8'>
-            <p className='text-gray-500'>{category}</p>
+            <p className='text-gray-500 uppercase'>{category}</p>
             <h2>{title}</h2>
             <p className='text-[14px]'>{description}</p>
 
@@ -28,7 +28,8 @@ const Product = ({item, handleClick}) => {
                 </div>
                 <p className=' text-gray-500 text-[12px]'>(312,344)</p>
             </div>
-            <h3 className=' text-primary text-xl pt-2'>Rs-{price}</h3>
+            <h3 className=' text-primary text-xl pt-2 flex gap-1'>Rs-{price}</h3>
+            
         </div>
 
         {/* Only show in Hover */}

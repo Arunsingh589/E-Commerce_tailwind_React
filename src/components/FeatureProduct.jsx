@@ -23,6 +23,7 @@ const FeatureProduct = ({handleClick}) => {
                     <Product
                       key={item.id}
                        item={item}
+                       
                       handleClick={handleClick}
                     />
                    ))
