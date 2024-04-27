@@ -94,7 +94,7 @@ const Navbar = ({ size, setShow, handleClick }) => {
 
           <div className='container flex justify-between items-center text-[22px] py-4 md:hidden'>
         
-            <ul className={`duration-300 md:hidden w-full h-screen text-white  fixed bg-black top-[73px]
+            <ul className={`duration-300 md:hidden w-full h-screen text-white  fixed bg-black top-[65px]
                    ${toggle ? 'left-[0]' : 'left-[-100%]'}
                    `}>
               <li onClick={() => handleCategoryClick(items)} className='p-5'>All Products</li>

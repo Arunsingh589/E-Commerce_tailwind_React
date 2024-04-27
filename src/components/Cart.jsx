@@ -37,7 +37,7 @@ const Cart = ({ cart, setCart, setShow, handleChange }) => {
        ) : (
         <section> 
           {cart.map((item) => (
-            <div className="border-b border-sky-500 " key={item.id}>
+            <div className=" border-sky-500 border-b " key={item.id}>
               <div className="w-[100px] h-[100px] md:w-[200px] md:h-[160px]  relative right-20  flex md:flex ">
                 <img className="w-[200px] md:w-[400px]  " src={item.imgSrc} alt={item.title} />
                 
@@ -65,8 +65,8 @@ const Cart = ({ cart, setCart, setShow, handleChange }) => {
             </div>
           ))}
           <div className=" flex justify-between py-0 sm:py-1 relative gap-2">
-            <span className="text-[8px] sm:text-[15px] md:text-[20px] lg:text-[25px] xl:text-[32px] font-bold text-[skyblue] tracking-wider">Total Price of Your Cart</span>
-            <span className=" text-[8px] sm:text-[15px] md:text-[20px] lg:text-[25px] xl:text-[32px] font-bold text-[gray] ">Rs-{price}</span>
+            <span className="text-[8px] sm:text-[15px] md:text-[20px] lg:text-[25px] xl:text-[32px] font-bold text-[skyblue] tracking-wider relative right-9">Total Price of Your Cart</span>
+            <span className=" text-[8px] sm:text-[15px] md:text-[20px] lg:text-[25px] xl:text-[32px] font-bold text-[gray] right-6 relative ">Rs-{price}</span>
           </div>
         </section>
        ) 
