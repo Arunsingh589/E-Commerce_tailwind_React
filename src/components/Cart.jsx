@@ -26,10 +26,10 @@ const Cart = ({ cart, setCart, setShow, handleChange }) => {
 
       {cart.length === 0 ? (
         <div className="items-center justify-center ">
-      <h1 className="text-[20px] md:text-3xl lg:text-5xl font-semibold mb-10 text-center justify-center text-black ">Your cart is empty</h1>
+      <h1 className="text-[20px] flex md:text-3xl lg:text-5xl font-semibold mb-10 text-center justify-center text-black ">Your cart is empty</h1>
 
         
-        <p className="text-center tracking-wider bg-[black] transform transition duration-300 hover:scale-105 text-white cursor-pointer  px-3 py-2 md:py-2 md:px-3 font-semibold  rounded-lg" onClick={()=> setShow(true)}>Continue Shopping</p>
+        <p className="text-center  tracking-wider bg-[black] transform transition duration-300 hover:scale-105 text-white cursor-pointer  px-[30px]  py-[13px] md:py-2 md:px-3 font-semibold text-[11px] md:text-[20px] rounded-lg" onClick={()=> setShow(true)}>Continue Shopping</p>
         </div>
         
         
@@ -66,7 +66,7 @@ const Cart = ({ cart, setCart, setShow, handleChange }) => {
           ))}
           <div className=" flex justify-between py-0 sm:py-1 relative gap-2">
             <span className="text-[8px] sm:text-[15px] md:text-[20px] lg:text-[25px] xl:text-[32px] font-bold text-[skyblue] tracking-wider">Total Price of Your Cart</span>
-            <span className=" text-[8px] sm:text-[15px] md:text-[20px] lg:text-[25px] xl:text-[32px] font-bold text-[gray]">Rs-{price}</span>
+            <span className=" text-[8px] sm:text-[15px] md:text-[20px] lg:text-[25px] xl:text-[32px] font-bold text-[gray] ">Rs-{price}</span>
           </div>
         </section>
        ) 

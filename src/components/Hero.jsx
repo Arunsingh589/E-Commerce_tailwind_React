@@ -18,7 +18,8 @@ const Hero = () => {
                 </div>
 
             </div>
-            <div className='flex items-center h-full'>
+            
+            <div className=''>
                 <img   src="/remove.png"  alt="e-image" />
             </div>
         </div>
