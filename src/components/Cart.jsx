@@ -29,7 +29,7 @@ const Cart = ({ cart, setCart, setShow, handleChange }) => {
       <h1 className="text-[20px] flex md:text-3xl lg:text-5xl font-semibold mb-10 text-center justify-center text-black ">Your cart is empty</h1>
 
         
-        <p className="text-center  tracking-wider bg-[black] transform transition duration-300 hover:scale-105 text-white cursor-pointer  px-[30px]  py-[13px] md:py-2 md:px-3 font-semibold text-[11px] md:text-[20px] rounded-lg" onClick={()=> setShow(true)}>Continue Shopping</p>
+        <p className="text-center  tracking-wider bg-[black] transform transition duration-300 hover:scale-105 text-white cursor-pointer  px-[30px]  py-[13px] md:py-2 md:px-3 font-semibold text-[11px] sm:text-[20px] rounded-lg" onClick={()=> setShow(true)}>Continue Shopping</p>
         </div>
         
         
