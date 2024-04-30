@@ -17,7 +17,6 @@ function App() {
   const [cart, setCart] = useState([]);
   const [data, setData] = useState(items);
   const [category, setCategory] = useState('');
-  
 
   
   
@@ -74,6 +73,8 @@ function App() {
 
   }
 
+  
+
 
   
   return (
@@ -104,6 +105,7 @@ function App() {
             {
               show ? 
                 <>
+                
                  <Category handleClick={handleClick}  /> 
                    
                   

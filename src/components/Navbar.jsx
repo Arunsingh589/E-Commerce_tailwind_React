@@ -13,6 +13,10 @@ const Navbar = ({ size, setShow, handleClick }) => {
   const [toggle, setToggle] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [products, setProducts] = useState(items);
+  const [userLoginVisible, setUserLoginVisible] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [signupSuccess, setSignupSuccess] = useState(false);
 
   const [filterData, setFilterData] = useState([]);
 
@@ -47,12 +51,65 @@ const Navbar = ({ size, setShow, handleClick }) => {
         return item;
       }
     }) : [];
+
+
+    const handleUserCircleClick = () => {
+      setUserLoginVisible(true);
+    };
+  
+    const handleLoginSubmit = () => {
+      // Perform login logic here
+      console.log("Email:", email, "Password:", password);
+      // After login logic, reset the inputs and hide the login section
+      setEmail('');
+      setPassword('');
+      setUserLoginVisible(false);
+      setSignupSuccess(true);
+      // Hide the login section after successful signup
+      setTimeout(() => {
+        setSignupSuccess(false);
+      }, 2000);
+    };
+  
+
+
+
+
   return (
     <>
+    
+           
 
 
       <nav className=' sticky top-0 left-0 z-10 border-b border-primaryDark dark:bg-primaryDark m-0 p-0 '>
         <div className='bg-white  md:bg-primaryDark'>
+
+           {/* User Login Section */}
+           {userLoginVisible && (
+        <div className="fixed top-[25.5%] left-[84%] transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 w-[30%] h-[30%] shadow-lg">
+          <input
+            type="text"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="block w-full border border-gray-300 rounded-md py-2 px-3 mb-3"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="block w-full border border-gray-300 rounded-md py-2 px-3 mb-3"
+          />
+          <button onClick={handleLoginSubmit} className="bg-blue-500 text-white rounded-md py-2 px-4">Login</button>
+        </div>
+      )}
+
+      {signupSuccess && (
+        <div className="fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white p-4 shadow-lg">
+          You are successfully signed up!
+        </div>
+      )}
 
           <div className='container justify-between py-3  items-center hidden md:flex'>
 
@@ -74,8 +131,20 @@ const Navbar = ({ size, setShow, handleClick }) => {
 
 
             </div>
+
+
+
+
+
+
+
             <div className='text-white text-[26px] gap-6 flex'>
-              <LuUserCircle2 />
+
+            <div className='relative cursor-pointer' onClick={handleUserCircleClick}>
+                <LuUserCircle2 />
+               
+              </div>
+
               <div className='relative cursor-pointer' onClick={() => setShow(false)}>
                 <FiShoppingCart />
                 <div className='bg-red-500 w-[20px] h-[20px] absolute rounded-full
@@ -90,16 +159,18 @@ const Navbar = ({ size, setShow, handleClick }) => {
 
 
           </div>
+
+
           {/* Visible in Moblle */}
 
-          <div className='container flex justify-between items-center text-[22px] py-4 md:hidden'>
+          <div className='container flex justify-between items-center text-[22px] py-4 md:hidden  '>
         
-            <ul className={`duration-300 md:hidden w-full h-screen text-white  fixed bg-black top-[65px]
+            <ul className={`duration-300 md:hidden w-full h-screen text-white py-16  overflow-y-scroll   fixed bg-black top-[65px]
                    ${toggle ? 'left-[0]' : 'left-[-100%]'}
                    `}>
-              <li onClick={() => handleCategoryClick(items)} className='p-5'>All Products</li>
+              <li onClick={() => handleCategoryClick(items)} className='p-5 '>All Products</li>
               <li onClick={() => handleCategoryClick('mb protines')} className='p-5'>MB Protines</li>
-              <li onClick={() => handleCategoryClick('hf protines')} className='p-5'>HF Protines</li>
+              <li onClick={() => handleCategoryClick('hf protines')} className='p-5 '>HF Protines</li>
               <li onClick={() => handleCategoryClick('gnc protines')} className='p-5'>GNC Protines</li>
               <li className='p-5'>Contact</li>
               <div >
@@ -143,6 +214,7 @@ const Navbar = ({ size, setShow, handleClick }) => {
 
 
       </nav>
+     
 
 
       <div className='border border-gray-300   cursor-pointer relative  group hover:shadow-2xl'>

@@ -45,7 +45,7 @@ const Category = ({handleClick}) => {
         </ul>
     </div>
     <div className=' container'>
-    {/* <div className='border border-gray-300   cursor-pointer relative  group hover:shadow-2xl'> */}
+    {/* <div className='border border-gray-300 py-4   cursor-pointer relative  group hover:shadow-2xl'> */}
       <div className= '  flex gap-4  items-center justify-center   '>
             
        
