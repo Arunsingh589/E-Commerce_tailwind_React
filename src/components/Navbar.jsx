@@ -17,6 +17,9 @@ const Navbar = ({ size, setShow, handleClick }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [signupSuccess, setSignupSuccess] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+
 
   const [filterData, setFilterData] = useState([]);
 
@@ -53,63 +56,126 @@ const Navbar = ({ size, setShow, handleClick }) => {
     }) : [];
 
 
-    const handleUserCircleClick = () => {
-      setUserLoginVisible(true);
-    };
-  
-    const handleLoginSubmit = () => {
-      // Perform login logic here
+  const handleUserCircleClick = () => {
+
+    setUserLoginVisible(true);
+
+
+  };
+
+
+
+  const handleLoginSubmit = () => {
+
+    if (email.trim() === '') {
+      setEmailError('Email is required');
+      setTimeout(() => {
+        setEmailError(" ")
+    }, 3000)
+    return;
+
+    } else if (!/(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}/.test(email)) {
+      setEmailError('Email should contain only alphanumeric characters');
+      setTimeout(() => {
+        setEmailError(" ")
+    }, 3000)
+    return;
+    }
+
+    if (password.trim() === '') {
+      setPasswordError('Password is required');
+      setTimeout(() => {
+        setPasswordError(" ")
+    }, 3000)
+    return;
+    } else if (password.length < 8) {
+      setPasswordError('Password should be at least 8 characters long');
+      setTimeout(() => {
+        setPasswordError(" ")
+    }, 3000)
+    return;
+    }
+
+    // if (!emailError && !passwordError) {
       console.log("Email:", email, "Password:", password);
-      // After login logic, reset the inputs and hide the login section
+
+
       setEmail('');
       setPassword('');
       setUserLoginVisible(false);
       setSignupSuccess(true);
-      // Hide the login section after successful signup
+      setEmailError('');
+      setPasswordError('');
+
+
       setTimeout(() => {
         setSignupSuccess(false);
       }, 2000);
     };
-  
+  // };
+
 
 
 
 
   return (
     <>
-    
-           
+
+
 
 
       <nav className=' sticky top-0 left-0 z-10 border-b border-primaryDark dark:bg-primaryDark m-0 p-0 '>
         <div className='bg-white  md:bg-primaryDark'>
 
-           {/* User Login Section */}
-           {userLoginVisible && (
-        <div className="fixed top-[25.5%] left-[84%] transform -translate-x-1/2 -translate-y-1/2 bg-white p-4 w-[30%] h-[30%] shadow-lg">
-          <input
-            type="text"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="block w-full border border-gray-300 rounded-md py-2 px-3 mb-3"
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="block w-full border border-gray-300 rounded-md py-2 px-3 mb-3"
-          />
-          <button onClick={handleLoginSubmit} className="bg-blue-500 text-white rounded-md py-2 px-4">Login</button>
-        </div>
-      )}
+          {/* User Login Section */}
+          {userLoginVisible && (
+            <div className="flex justify-center items-center h-screen">
+            <div className="w-96 rounded-lg shadow-lg p-8 bg-white dark:bg-primaryDark">
+              <p className="text-center font-bold text-3xl mb-8">Sign in</p>
+              <div className="space-y-4" 
+                
+              >
+                <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                  className="w-full py-2 px-4 border border-gray-300 rounded-lg outline-none focus:border-purple-500"
+                  type="text"
+                  placeholder="Username"
+                />
+            {emailError && <p className="text-red-500">{emailError}</p>}
 
-      {signupSuccess && (
-        <div className="fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white p-4 shadow-lg">
-          You are successfully signed up!
-        </div>
-      )}
+                <input
+                value={password}
+                onChange={(e) => setPassword(e.target.value) }
+                  className="w-full py-2 px-4 border border-gray-300 rounded-lg outline-none focus:border-purple-500"
+                  type="password"
+                  placeholder="Password"
+                />
+            {passwordError && <p className="text-red-500">{passwordError}</p>}
+
+                <button
+                  className="w-full py-2 px-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg shadow-md hover:shadow-lg transition duration-300"
+                  type="submit"
+                  onClick={handleLoginSubmit}
+
+                 >
+                  Sign in
+                </button>
+                <p className="text-center">
+                  <a className="text-purple-500" href="#">
+                    Forgot Password?
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+          )}
+
+          {signupSuccess && (
+            <div className="fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-green-500 text-white p-4 shadow-lg">
+              You are successfully signed up!
+            </div>
+          )}
 
           <div className='container justify-between py-3  items-center hidden md:flex'>
 
@@ -127,7 +193,7 @@ const Navbar = ({ size, setShow, handleClick }) => {
                   type="text" placeholder='Enter Your Text'
                   className=' px-4 py-3 w-[300px] rounded-lg' />
               </div>
-           
+
 
 
             </div>
@@ -138,11 +204,12 @@ const Navbar = ({ size, setShow, handleClick }) => {
 
 
 
+
             <div className='text-white text-[26px] gap-6 flex'>
 
-            <div className='relative cursor-pointer' onClick={handleUserCircleClick}>
+              <div className='relative cursor-pointer' onClick={handleUserCircleClick}>
                 <LuUserCircle2 />
-               
+
               </div>
 
               <div className='relative cursor-pointer' onClick={() => setShow(false)}>
@@ -164,7 +231,7 @@ const Navbar = ({ size, setShow, handleClick }) => {
           {/* Visible in Moblle */}
 
           <div className='container flex justify-between items-center text-[22px] py-4 md:hidden  '>
-        
+
             <ul className={`duration-300 md:hidden w-full h-screen text-white py-16  overflow-y-scroll   fixed bg-black top-[65px]
                    ${toggle ? 'left-[0]' : 'left-[-100%]'}
                    `}>
@@ -175,14 +242,14 @@ const Navbar = ({ size, setShow, handleClick }) => {
               <li className='p-5'>Contact</li>
               <div >
 
-              {
-                filteredProducts.map(item => (
+                {
+                  filteredProducts.map(item => (
 
-                  <Product key={item.id} item={item} handleClick={handleClick} />
-                ))}
+                    <Product key={item.id} item={item} handleClick={handleClick} />
+                  ))}
 
               </div>
-              
+
 
             </ul>
             {
@@ -205,7 +272,7 @@ const Navbar = ({ size, setShow, handleClick }) => {
                  top-[15px] right-[-10px]'>{size}</div>
             </div>
 
-           
+
 
           </div>
         </div>
@@ -214,22 +281,22 @@ const Navbar = ({ size, setShow, handleClick }) => {
 
 
       </nav>
-     
+
 
 
       <div className='border border-gray-300   cursor-pointer relative  group hover:shadow-2xl'>
-      <div className=' gap-4  items-center justify-between  grid grid-cols-4 '>
-            
-       
-             
-      {
-        filteredData.map(item => (
+        <div className=' gap-4  items-center justify-between  grid grid-cols-4 '>
 
-          <Product key={item.id} item={item} handleClick={handleClick} />
-        ))}
 
-</div>
-</div>
+
+          {
+            filteredData.map(item => (
+
+              <Product key={item.id} item={item} handleClick={handleClick} />
+            ))}
+
+        </div>
+      </div>
 
 
     </>
@@ -241,7 +308,7 @@ export default Navbar
 
 
 
-   {/* {
+{/* {
         items.filter((item) => {
           if(searchTerm == '') {
             return item;
