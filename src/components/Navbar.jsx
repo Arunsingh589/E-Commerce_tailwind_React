@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { LuUserCircle2 } from "react-icons/lu";
 import { FiShoppingCart } from "react-icons/fi";
 import { HiMenuAlt1 } from "react-icons/hi";
@@ -19,6 +19,8 @@ const Navbar = ({ size, setShow, handleClick }) => {
   const [signupSuccess, setSignupSuccess] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const fileInputRef = useRef(null);
 
 
   const [filterData, setFilterData] = useState([]);
@@ -59,9 +61,15 @@ const Navbar = ({ size, setShow, handleClick }) => {
   const handleUserCircleClick = () => {
 
     setUserLoginVisible(true);
-
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
 
   };
+  const handleImageChange = (event) => {
+    setSelectedImage(event.target.files[0]);
+  };
+
 
 
 
@@ -71,47 +79,47 @@ const Navbar = ({ size, setShow, handleClick }) => {
       setEmailError('Email is required');
       setTimeout(() => {
         setEmailError(" ")
-    }, 3000)
-    return;
+      }, 3000)
+      return;
 
     } else if (!/(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}/.test(email)) {
-      setEmailError('Email should contain only alphanumeric characters');
+      setEmailError('Email must contain at least one letter, one number, and one symbol');
       setTimeout(() => {
         setEmailError(" ")
-    }, 3000)
-    return;
+      }, 3000)
+      return;
     }
 
     if (password.trim() === '') {
       setPasswordError('Password is required');
       setTimeout(() => {
         setPasswordError(" ")
-    }, 3000)
-    return;
+      }, 3000)
+      return;
     } else if (password.length < 8) {
       setPasswordError('Password should be at least 8 characters long');
       setTimeout(() => {
         setPasswordError(" ")
-    }, 3000)
-    return;
+      }, 3000)
+      return;
     }
 
     // if (!emailError && !passwordError) {
-      console.log("Email:", email, "Password:", password);
+    console.log("Email:", email, "Password:", password);
 
 
-      setEmail('');
-      setPassword('');
-      setUserLoginVisible(false);
-      setSignupSuccess(true);
-      setEmailError('');
-      setPasswordError('');
+    setEmail('');
+    setPassword('');
+    setUserLoginVisible(false);
+    setSignupSuccess(true);
+    setEmailError('');
+    setPasswordError('');
 
 
-      setTimeout(() => {
-        setSignupSuccess(false);
-      }, 2000);
-    };
+    setTimeout(() => {
+      setSignupSuccess(false);
+    }, 2000);
+  };
   // };
 
 
@@ -130,45 +138,97 @@ const Navbar = ({ size, setShow, handleClick }) => {
           {/* User Login Section */}
           {userLoginVisible && (
             <div className="flex justify-center items-center h-screen">
-            <div className="w-96 rounded-lg shadow-lg p-8 bg-white dark:bg-primaryDark">
-              <p className="text-center font-bold text-3xl mb-8">Sign in</p>
-              <div className="space-y-4" 
-                
-              >
-                <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                  className="w-full py-2 px-4 border border-gray-300 rounded-lg outline-none focus:border-purple-500"
-                  type="text"
-                  placeholder="Username"
-                />
-            {emailError && <p className="text-red-500">{emailError}</p>}
 
-                <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value) }
-                  className="w-full py-2 px-4 border border-gray-300 rounded-lg outline-none focus:border-purple-500"
-                  type="password"
-                  placeholder="Password"
-                />
-            {passwordError && <p className="text-red-500">{passwordError}</p>}
+              <div className="w-96 rounded-lg shadow-lg p-8 bg-white dark:bg-primaryDark">
+                <p className="text-center font-bold text-3xl mb-8">Sign in</p>
+                <div className="space-y-4"
 
-                <button
-                  className="w-full py-2 px-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg shadow-md hover:shadow-lg transition duration-300"
-                  type="submit"
-                  onClick={handleLoginSubmit}
+                >
+                  {/* Conditionally render image selection section */}
+                  {selectedImage === null && (
+                    <div className="flex justify-center mb-4">
+                      <div className="relative cursor-pointer" onClick={() => fileInputRef.current.click()}>
+                        <LuUserCircle2 className=' w-[48px] h-[48px]' />
+                      </div>
+                    </div>
+                  )}
+                  {/* Hidden file input element */}
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleImageChange}
+                    className='hidden'
+                  />
 
-                 >
-                  Sign in
-                </button>
-                <p className="text-center">
-                  <a className="text-purple-500" href="#">
-                    Forgot Password?
-                  </a>
-                </p>
+                  {/* Render selected image if available */}
+                  {selectedImage && (
+                    <div className="flex justify-center mb-4">
+                      <div className="relative cursor-pointer">
+                        <LuUserCircle2 className=' w-[48px] h-[48px]' />
+                        <img
+                          src={URL.createObjectURL(selectedImage)}
+                          alt="Selected"
+                          className="absolute top-0 left-0 w-full h-full rounded-full "
+                        />
+                      </div>
+                    </div>
+                  )}
+
+
+                  {selectedImage && (
+                   <div className="flex justify-between gap-2">
+                   <button
+                     onClick={() => setSelectedImage(null)} // Clear selected image
+                     className="w-1/2 py-2 bg-gray-200 text-gray-600 rounded-lg shadow-md hover:shadow-lg transition duration-300"
+                   >
+                     Remove Image
+                   </button>
+                   <button
+                     onClick={() => fileInputRef.current.click()} // Open file input to change image
+                     className="w-1/2 py-2 bg-gray-200 text-gray-600 rounded-lg shadow-md hover:shadow-lg transition duration-300"
+                   >
+                     Change Image
+                   </button>
+                 </div>
+                    
+                  )}
+                  {/* Render email and password fields */}
+
+
+                  <input
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full py-2 px-4 border border-gray-300 rounded-lg outline-none focus:border-purple-500"
+                    type="text"
+                    placeholder="Username"
+                  />
+                  {emailError && <p className="text-red-500">{emailError}</p>}
+
+                  <input
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full py-2 px-4 border border-gray-300 rounded-lg outline-none focus:border-purple-500"
+                    type="password"
+                    placeholder="Password"
+                  />
+                  {passwordError && <p className="text-red-500">{passwordError}</p>}
+
+                  <button
+                    className="w-full py-2 px-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg shadow-md hover:shadow-lg transition duration-300"
+                    type="submit"
+                    onClick={handleLoginSubmit}
+
+                  >
+                    Sign in
+                  </button>
+                  <p className="text-center">
+                    <a className="text-purple-500" href="#">
+                      Forgot Password?
+                    </a>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
           )}
 
           {signupSuccess && (
@@ -207,8 +267,16 @@ const Navbar = ({ size, setShow, handleClick }) => {
 
             <div className='text-white text-[26px] gap-6 flex'>
 
+
               <div className='relative cursor-pointer' onClick={handleUserCircleClick}>
                 <LuUserCircle2 />
+                {selectedImage && (
+                  <img
+                    src={URL.createObjectURL(selectedImage)}
+                    alt="Selected"
+                    className="absolute top-0 left-0 w-full h-full rounded-full"
+                  />
+                )}
 
               </div>
 
