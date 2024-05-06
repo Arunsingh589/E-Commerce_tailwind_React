@@ -20,6 +20,7 @@ const Navbar = ({ size, setShow, handleClick }) => {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [showContactDetails, setShowContactDetails] = useState(false);
   const fileInputRef = useRef(null);
 
 
@@ -176,21 +177,21 @@ const Navbar = ({ size, setShow, handleClick }) => {
 
 
                   {selectedImage && (
-                   <div className="flex justify-between gap-2">
-                   <button
-                     onClick={() => setSelectedImage(null)} // Clear selected image
-                     className="w-1/2 py-2 bg-gray-200 text-gray-600 rounded-lg shadow-md hover:shadow-lg transition duration-300"
-                   >
-                     Remove Image
-                   </button>
-                   <button
-                     onClick={() => fileInputRef.current.click()} // Open file input to change image
-                     className="w-1/2 py-2 bg-gray-200 text-gray-600 rounded-lg shadow-md hover:shadow-lg transition duration-300"
-                   >
-                     Change Image
-                   </button>
-                 </div>
-                    
+                    <div className="flex justify-between gap-2">
+                      <button
+                        onClick={() => setSelectedImage(null)} // Clear selected image
+                        className="w-1/2 py-2 bg-gray-200 text-gray-600 rounded-lg shadow-md hover:shadow-lg transition duration-300"
+                      >
+                        Remove Image
+                      </button>
+                      <button
+                        onClick={() => fileInputRef.current.click()} // Open file input to change image
+                        className="w-1/2 py-2 bg-gray-200 text-gray-600 rounded-lg shadow-md hover:shadow-lg transition duration-300"
+                      >
+                        Change Image
+                      </button>
+                    </div>
+
                   )}
                   {/* Render email and password fields */}
 
@@ -269,12 +270,12 @@ const Navbar = ({ size, setShow, handleClick }) => {
 
 
               <div className='relative cursor-pointer' onClick={handleUserCircleClick}>
-                <LuUserCircle2 />
+                <LuUserCircle2 className='' />
                 {selectedImage && (
                   <img
                     src={URL.createObjectURL(selectedImage)}
                     alt="Selected"
-                    className="absolute top-0 left-0 w-full h-full rounded-full"
+                    className="absolute top-0 left-0 w-full h-full rounded-full border border-yellow-400  hover:scale-125 "
                   />
                 )}
 
@@ -300,15 +301,29 @@ const Navbar = ({ size, setShow, handleClick }) => {
 
           <div className='container flex justify-between items-center text-[22px] py-4 md:hidden  '>
 
+
             <ul className={`duration-300 md:hidden w-full h-screen text-white py-16  overflow-y-scroll   fixed bg-black top-[65px]
                    ${toggle ? 'left-[0]' : 'left-[-100%]'}
                    `}>
+
               <li onClick={() => handleCategoryClick(items)} className='p-5 '>All Products</li>
               <li onClick={() => handleCategoryClick('mb protines')} className='p-5'>MB Protines</li>
               <li onClick={() => handleCategoryClick('hf protines')} className='p-5 '>HF Protines</li>
               <li onClick={() => handleCategoryClick('gnc protines')} className='p-5'>GNC Protines</li>
-              <li className='p-5'>Contact</li>
+              <li onClick={() => setShowContactDetails(!showContactDetails)} className='p-5'>Contact</li>
+              {showContactDetails && (
+                <div className="px-5">
+                  <div className="border border-gray-300 p-4 mb-4">
+                    <p className="text-blue-500">Mobile: <span className="text-yellow-500">9773674997</span></p>
+                    <p className="text-blue-500">Email: <span className="text-yellow-500">Arun@test.com</span></p>
+                    <p className="text-blue-500">Facebook: <span className="text-yellow-500">facebook.com</span></p>
+                    <p className="text-blue-500">Guidelines:</p>
+                    <p className="text-yellow-500">If any problem come in a product that you purchased from our site, it can be replaced within 15 days. After 15 days, no products will be replaced or refunded.</p>
+                  </div>
+                </div>
+              )}
               <div >
+
 
                 {
                   filteredProducts.map(item => (
@@ -331,8 +346,22 @@ const Navbar = ({ size, setShow, handleClick }) => {
                   className='text-black text-2xl md:hidden block' />
             }
             <div onClick={() => setShow(true)}>Logo</div>
-            <div className='relative' onClick={() => setShow(false)}>
-              <FiShoppingCart />
+
+
+            <div className='relative flex gap-4 items-center' >
+              
+            <LuUserCircle2 className=''  onClick={handleUserCircleClick} />
+            {selectedImage && (
+                  <img
+                    src={URL.createObjectURL(selectedImage)}
+                    alt="Selected"
+                    className="absolute top-0 left-0 w-[47%] h-full rounded-full border border-yellow-400  hover:scale-125"
+                  />
+                )}
+                
+
+
+              <FiShoppingCart onClick={() => setShow(false)} />
 
 
               <div className='bg-red-500 w-[20px] h-[20px] absolute rounded-full
