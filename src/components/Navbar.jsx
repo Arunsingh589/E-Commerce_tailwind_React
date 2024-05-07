@@ -350,15 +350,17 @@ const Navbar = ({ size, setShow, handleClick }) => {
 
             <div className='relative flex gap-4 items-center' >
               
-            <LuUserCircle2 className=''  onClick={handleUserCircleClick} />
-            {selectedImage && (
-                  <img
-                    src={URL.createObjectURL(selectedImage)}
-                    alt="Selected"
-                    className="absolute top-0 left-0 w-[47%] h-full rounded-full border border-yellow-400  hover:scale-125"
-                  />
-                )}
-                
+            {/* User Circle Icon */}
+        <div className='relative cursor-pointer' onClick={handleUserCircleClick}>
+          <LuUserCircle2 className='' />
+          {selectedImage && (
+            <img
+              src={URL.createObjectURL(selectedImage)}
+              alt="Selected"
+              className="absolute top-0 left-0 w-full h-full rounded-full border border-yellow-400  hover:scale-125"
+            />
+          )}
+        </div>
 
 
               <FiShoppingCart onClick={() => setShow(false)} />
